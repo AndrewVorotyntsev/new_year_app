@@ -95,8 +95,10 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           child: SizedBox(
             height: 620,
             width: 420,
-            child: CustomPaint(
-              painter: SnowflakePainter(snowflakes: _snowflakes),
+            child: RepaintBoundary(
+              child: CustomPaint(
+                painter: SnowflakePainter(snowflakes: _snowflakes),
+              ),
             ),
           ),
         ),

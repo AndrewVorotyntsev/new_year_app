@@ -1,4 +1,4 @@
-/// Отрисовка снежинок с помощью виджетов
+/// Отрисовка треугольников с помощью виджетов
 
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -44,8 +44,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       vsync: this,
       duration: const Duration(milliseconds: 16),
     )..addListener(() {
-        _updateSnowflakes();
-      });
+      _updateSnowflakes();
+    });
 
     // Генерируем снежинки
     _generateSnowflakes();
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Widget Flakes $snowflakeTestCount'),
+        title: Text('Triangles $snowflakeTestCount'),
       ),
       body: SafeArea(
         child: Center(
@@ -115,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       return Positioned(
         left: snowflake.position.dx,
         top: snowflake.position.dy,
-        child: SnowflakeWidget(radius: snowflake.radius),
+        child: SnowflakeWidget(size: snowflake.radius),
       );
     }).toList();
   }
@@ -134,19 +134,41 @@ class Snowflake {
 }
 
 class SnowflakeWidget extends StatelessWidget {
-  final double radius;
+  final double size;
 
-  const SnowflakeWidget({super.key, required this.radius});
+  const SnowflakeWidget({super.key, required this.size});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: radius * 2,
-      height: radius * 2,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
+      width: size * 2,
+      height: size * 2,
+      child: ClipPath(
+        clipper: TriangleClipper(),
+        child: Container(
+          color: Colors.white, // Цвет треугольника
+        ),
       ),
     );
+  }
+}
+
+class TriangleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+
+    // Треугольник: вершины по углам
+    path.moveTo(size.width / 2, 0); // верхняя вершина
+    path.lineTo(0, size.height); // нижний левый угол
+    path.lineTo(size.width, size.height); // нижний правый угол
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }

@@ -1,4 +1,4 @@
-/// Отрисовка снежинок с помощью Vertices
+/// Отрисовка треугольников с помощью Vertices
 
 import 'dart:math';
 import 'dart:ui';
@@ -156,7 +156,7 @@ class SnowflakePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     _drawNightSky(canvas, size);
-    _drawSnowflakes(canvas);
+    _drawSnowflakes(canvas, size);
   }
 
   void _drawNightSky(Canvas canvas, Size size) {
@@ -166,42 +166,39 @@ class SnowflakePainter extends CustomPainter {
     );
   }
 
-  void _drawSnowflakes(Canvas canvas) {
-    final verticesList = <Vertices>[];
+  void _drawSnowflakes(Canvas canvas, Size size) {
+    final verticesPositions = <Offset>[];
+    final colors = <Color>[];
 
     for (var snowflake in snowflakes) {
-      verticesList.add(_createCircleVertices(snowflake.position, snowflake.radius));
+      // Добавляем треугольник как "точку"
+      final center = snowflake.position;
+      final radius = snowflake.radius;
+
+      verticesPositions.addAll([
+        Offset(center.dx, center.dy - radius), // Верхняя вершина
+        Offset(center.dx - radius, center.dy + radius), // Левая вершина
+        Offset(center.dx + radius, center.dy + radius), // Правая вершина
+      ]);
+
+      // Добавляем цвет для каждой вершины
+      colors.addAll([
+        Colors.white.withOpacity(0.8),
+        Colors.white.withOpacity(0.8),
+        Colors.white.withOpacity(0.8),
+      ]);
     }
 
-    final paint = Paint()..color = Colors.white;
-
-    for (var vertices in verticesList) {
-      canvas.drawVertices(vertices, BlendMode.srcOver, paint);
-    }
-  }
-
-  Vertices _createCircleVertices(Offset center, double radius) {
-    const int segments = 12; // Количество сегментов круга
-    final angleStep = (2 * pi) / segments;
-    final positions = <Offset>[center];
-    final colors = <Color>[Colors.white.withOpacity(0.9)];
-
-    // Добавляем точки круга
-    for (int i = 0; i <= segments; i++) {
-      final angle = i * angleStep;
-      positions.add(
-        Offset(
-          center.dx + radius * cos(angle),
-          center.dy + radius * sin(angle),
-        ),
-      );
-      colors.add(Colors.white.withOpacity(0.9));
-    }
-
-    return Vertices(
-      VertexMode.triangleFan,
-      positions,
+    final vertices = Vertices(
+      VertexMode.triangles,
+      verticesPositions,
       colors: colors,
+    );
+
+    canvas.drawVertices(
+      vertices,
+      BlendMode.srcOver,
+      Paint()..style = PaintingStyle.fill,
     );
   }
 

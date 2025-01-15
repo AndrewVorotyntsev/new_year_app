@@ -1,3 +1,5 @@
+/// Отрисовка снежинок с помощью обычного painter'а
+
 import 'dart:math';
 import 'dart:ui';
 
@@ -5,10 +7,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:new_year_app/data/constants.dart';
-
-// 7000 снежинок - 60 fps
-
-// ФПС - в режиме разработчика на телефоне
 
 void main() {
   runApp(const MyApp());

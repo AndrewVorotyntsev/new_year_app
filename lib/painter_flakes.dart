@@ -4,8 +4,8 @@ import 'dart:ui';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:new_year_app/data/constants.dart';
 
-int _snowflakeCount = 100;
 // 7000 снежинок - 60 fps
 
 // ФПС - в режиме разработчика на телефоне
@@ -19,14 +19,33 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      showPerformanceOverlay: true,
-      home: HomeScreen(),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth != 0) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              useMaterial3: true,
+            ),
+            // showPerformanceOverlay: true,
+            home: HomeScreen(),
+          );
+        }
+        return Container();
+      },
     );
+    // Если сделать так то в LayoutBuilder будет maxWidth maxHeight равным 0
+    // https://github.com/flutter/flutter/issues/25827
+    // https://github.com/flutter/engine/blob/bc8f14001d7ae522be2302c3ea6b28d460d3e2cb/lib/ui/window.dart#L116-L137
+
+    // return MaterialApp(
+    //   title: 'Flutter Demo',
+    //   theme: ThemeData(
+    //     useMaterial3: true,
+    //   ),
+    //   showPerformanceOverlay: true,
+    //   home: HomeScreen(),
+    // );
   }
 }
 
@@ -84,7 +103,7 @@ class _ScenePageState extends State<ScenePage> with SingleTickerProviderStateMix
   }
 
   void _generateSnowflakes() {
-    for (int i = 0; i < _snowflakeCount; i++) {
+    for (int i = 0; i < snowflakeTestCount; i++) {
       print(widget.constraints.maxWidth);
       print(widget.constraints.maxHeight);
 
@@ -117,7 +136,7 @@ class _ScenePageState extends State<ScenePage> with SingleTickerProviderStateMix
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('New Year'),
+        title: Text('Painter Flakes $snowflakeTestCount'),
       ),
       body: SafeArea(
         child: Align(

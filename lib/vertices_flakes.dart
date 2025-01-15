@@ -43,8 +43,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       vsync: this,
       duration: const Duration(milliseconds: 16),
     )..addListener(() {
-      _updateSnowflakes();
-    });
+        _updateSnowflakes();
+      });
 
     // Генерируем снежинки
     _generateSnowflakes();
@@ -144,7 +144,6 @@ class Snowflake {
   }
 }
 
-
 class SnowflakePainter extends CustomPainter {
   final List<Snowflake> snowflakes;
 
@@ -178,7 +177,7 @@ class SnowflakePainter extends CustomPainter {
   }
 
   Vertices _createCircleVertices(Offset center, double radius) {
-    const int segments = 1; // Количество сегментов круга
+    const int segments = 12; // Количество сегментов круга
     final angleStep = (2 * pi) / segments;
     final positions = <Offset>[center];
     final colors = <Color>[Colors.white.withOpacity(0.9)];
@@ -205,5 +204,3 @@ class SnowflakePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
-
-

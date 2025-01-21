@@ -1,8 +1,10 @@
 /// Отрисовка снежинок с помощью виджетов
+library;
 
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:new_year_app/data/constants.dart';
+import 'package:new_year_app/info_overlay.dart';
 
 void main() {
   runApp(const MyApp());
@@ -89,20 +91,23 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Widget Flakes $snowflakeTestCount'),
+        title: const Text('Example'),
       ),
-      body: SafeArea(
-        child: Center(
-          child: SizedBox(
-            height: 620,
-            width: 420,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: Container(color: Colors.indigo), // Фон ночного неба
-                ),
-                ..._buildSnowflakes(), // Снежинки
-              ],
+      body: InfoOverlay(
+        info: 'Widget Flakes $snowflakeTestCount',
+        child: SafeArea(
+          child: Center(
+            child: SizedBox(
+              height: 620,
+              width: 420,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Container(color: Colors.indigo), // Фон ночного неба
+                  ),
+                  ..._buildSnowflakes(), // Снежинки
+                ],
+              ),
             ),
           ),
         ),
@@ -143,7 +148,7 @@ class SnowflakeWidget extends StatelessWidget {
     return Container(
       width: radius * 2,
       height: radius * 2,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         shape: BoxShape.circle,
       ),

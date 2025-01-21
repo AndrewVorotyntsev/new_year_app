@@ -3,6 +3,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:new_year_app/data/constants.dart';
+import 'package:new_year_app/info_overlay.dart';
 
 void main() {
   runApp(const MyApp());
@@ -89,20 +90,23 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Triangles $snowflakeTestCount'),
+        title: Text('Example'),
       ),
-      body: SafeArea(
-        child: Center(
-          child: SizedBox(
-            height: 620,
-            width: 420,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: Container(color: Colors.indigo), // Фон ночного неба
-                ),
-                ..._buildSnowflakes(), // Снежинки
-              ],
+      body: InfoOverlay(
+        info: 'Widget Triangles $snowflakeTestCount',
+        child: SafeArea(
+          child: Center(
+            child: SizedBox(
+              height: 620,
+              width: 420,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Container(color: Colors.indigo), // Фон ночного неба
+                  ),
+                  ..._buildSnowflakes(), // Снежинки
+                ],
+              ),
             ),
           ),
         ),

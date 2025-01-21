@@ -1,4 +1,5 @@
 /// Отрисовка снежинок с помощью обычного painter'а
+library;
 
 import 'dart:math';
 import 'dart:ui';
@@ -7,6 +8,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:new_year_app/data/constants.dart';
+import 'package:new_year_app/info_overlay.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
             ),
             // showPerformanceOverlay: true,
-            home: HomeScreen(),
+            home: const HomeScreen(),
           );
         }
         return Container();
@@ -102,9 +104,6 @@ class _ScenePageState extends State<ScenePage> with SingleTickerProviderStateMix
 
   void _generateSnowflakes() {
     for (int i = 0; i < snowflakeTestCount; i++) {
-      print(widget.constraints.maxWidth);
-      print(widget.constraints.maxHeight);
-
       _snowflakes.add(
         Snowflake(
           position: Offset(
@@ -134,30 +133,35 @@ class _ScenePageState extends State<ScenePage> with SingleTickerProviderStateMix
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Painter Flakes $snowflakeTestCount'),
+        title: const Text('Example'),
       ),
-      body: SafeArea(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: LayoutBuilder(builder: (context, constraints) {
-            return CustomPaint(
-              painter: NewYearTreePainter(snowflakes: _snowflakes),
-              child: SizedBox(
-                height: 620,
-                width: 420,
-                child: ColoredBox(
-                  color: Colors.red.withOpacity(0.1),
-                  // TODO: Что будет если не обрачивать?
-                  child: RepaintBoundary(
-                    child: CustomPaint(
-                      painter: NewYearTreePainter(snowflakes: _snowflakes),
-                      willChange: true,
+      body: InfoOverlay(
+        info: 'Painter Flakes $snowflakeTestCount',
+        child: SafeArea(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return CustomPaint(
+                  painter: NewYearTreePainter(snowflakes: _snowflakes),
+                  child: SizedBox(
+                    height: 620,
+                    width: 420,
+                    child: ColoredBox(
+                      color: Colors.red.withOpacity(0.1),
+                      // TODO: Что будет если не обрачивать?
+                      child: RepaintBoundary(
+                        child: CustomPaint(
+                          painter: NewYearTreePainter(snowflakes: _snowflakes),
+                          willChange: true,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            );
-          }),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );
@@ -195,15 +199,15 @@ class NewYearTreePainter extends CustomPainter {
     _drawTopBranch(canvas, size);
     _drawDecorBalls(canvas);
 
-    _drawGiftBox(canvas, center: Offset(100, size.height - 100), color: Colors.red, boxSize: Size(50, 50));
-    _drawGiftBox(canvas, center: Offset(300, size.height - 100), color: Colors.orange, boxSize: Size(100, 80));
-    _drawGiftBox(canvas, center: Offset(300, size.height - 100), color: Colors.orange, boxSize: Size(100, 80));
-    _drawGiftBox(canvas, center: Offset(180, size.height - 100), color: Colors.lightGreen, boxSize: Size(70, 70));
+    _drawGiftBox(canvas, center: Offset(100, size.height - 100), color: Colors.red, boxSize: const Size(50, 50));
+    _drawGiftBox(canvas, center: Offset(300, size.height - 100), color: Colors.orange, boxSize: const Size(100, 80));
+    _drawGiftBox(canvas, center: Offset(300, size.height - 100), color: Colors.orange, boxSize: const Size(100, 80));
+    _drawGiftBox(canvas, center: Offset(180, size.height - 100), color: Colors.lightGreen, boxSize: const Size(70, 70));
 
-    // canvas.save();
-    // canvas.saveLayer(null, Paint());
+    canvas.save();
+    canvas.saveLayer(null, Paint());
     _drawSnowflakes(canvas);
-    // canvas.restore();
+    canvas.restore();
   }
 
   void _drawSnowflakes(Canvas canvas) {
@@ -277,7 +281,7 @@ class NewYearTreePainter extends CustomPainter {
       ..lineTo(rightPoint.dx, rightPoint.dy)
       ..close();
 
-    final shader = LinearGradient(
+    final shader = const LinearGradient(
       colors: [
         Colors.green,
         Colors.green,
@@ -336,17 +340,17 @@ class NewYearTreePainter extends CustomPainter {
   }
 
   void _drawDecorBalls(Canvas canvas) {
-    _drawDecorBall(canvas, location: Offset(200, 200), color: Colors.red);
-    _drawDecorBall(canvas, location: Offset(170, 250), color: Colors.pinkAccent, radius: 10);
-    _drawDecorBall(canvas, location: Offset(235, 255), color: Colors.greenAccent);
-    _drawDecorBall(canvas, location: Offset(240, 170), color: Colors.orange, radius: 15);
-    _drawDecorBall(canvas, location: Offset(240, 170), color: Colors.orange);
-    _drawDecorBall(canvas, location: Offset(170, 300), color: Colors.blue);
-    _drawDecorBall(canvas, location: Offset(230, 310), color: Colors.purple, radius: 10);
-    _drawDecorBall(canvas, location: Offset(150, 370), color: Colors.grey.shade200, radius: 25);
-    _drawDecorBall(canvas, location: Offset(208, 370), color: Colors.yellow.shade200);
-    _drawDecorBall(canvas, location: Offset(275, 385), color: Colors.lime, radius: 18);
-    _drawDecorBall(canvas, location: Offset(187, 135), color: Colors.amber, radius: 14);
+    _drawDecorBall(canvas, location: const Offset(200, 200), color: Colors.red);
+    _drawDecorBall(canvas, location: const Offset(170, 250), color: Colors.pinkAccent, radius: 10);
+    _drawDecorBall(canvas, location: const Offset(235, 255), color: Colors.greenAccent);
+    _drawDecorBall(canvas, location: const Offset(240, 170), color: Colors.orange, radius: 15);
+    _drawDecorBall(canvas, location: const Offset(240, 170), color: Colors.orange);
+    _drawDecorBall(canvas, location: const Offset(170, 300), color: Colors.blue);
+    _drawDecorBall(canvas, location: const Offset(230, 310), color: Colors.purple, radius: 10);
+    _drawDecorBall(canvas, location: const Offset(150, 370), color: Colors.grey.shade200, radius: 25);
+    _drawDecorBall(canvas, location: const Offset(208, 370), color: Colors.yellow.shade200);
+    _drawDecorBall(canvas, location: const Offset(275, 385), color: Colors.lime, radius: 18);
+    _drawDecorBall(canvas, location: const Offset(187, 135), color: Colors.amber, radius: 14);
   }
 
   void _drawDecorBall(

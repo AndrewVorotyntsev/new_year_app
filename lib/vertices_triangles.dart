@@ -1,9 +1,11 @@
 /// Отрисовка треугольников с помощью Vertices
+library;
 
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:new_year_app/data/constants.dart';
+import 'package:new_year_app/info_overlay.dart';
 
 void main() {
   runApp(const MyApp());
@@ -90,16 +92,19 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Snowflakes with Vertices $snowflakeTestCount'),
+        title: const Text('Example'),
       ),
-      body: SafeArea(
-        child: Center(
-          child: SizedBox(
-            height: 620,
-            width: 420,
-            child: RepaintBoundary(
-              child: CustomPaint(
-                painter: SnowflakePainter(snowflakes: _snowflakes),
+      body: InfoOverlay(
+        info: 'Vertices Snowflakes $snowflakeTestCount',
+        child: SafeArea(
+          child: Center(
+            child: SizedBox(
+              height: 620,
+              width: 420,
+              child: RepaintBoundary(
+                child: CustomPaint(
+                  painter: SnowflakePainter(snowflakes: _snowflakes),
+                ),
               ),
             ),
           ),
@@ -131,7 +136,7 @@ class Snowflake {
 
   Vertices _createCircleVertices(Offset center, double radius) {
     const int segments = 12;
-    final angleStep = (2 * pi) / segments;
+    const angleStep = (2 * pi) / segments;
     final positions = <Offset>[center];
 
     for (int i = 0; i <= segments; i++) {

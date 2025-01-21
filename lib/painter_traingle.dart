@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:new_year_app/data/constants.dart';
+import 'package:new_year_app/info_overlay.dart';
 
 void main() {
   runApp(const MyApp());
@@ -61,8 +62,8 @@ class _ScenePageState extends State<ScenePage> with SingleTickerProviderStateMix
       vsync: this,
       duration: const Duration(milliseconds: 16),
     )..addListener(() {
-      _updateSnowflakes();
-    });
+        _updateSnowflakes();
+      });
 
     _generateSnowflakes();
 
@@ -106,29 +107,32 @@ class _ScenePageState extends State<ScenePage> with SingleTickerProviderStateMix
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Falling Triangles'),
+        title: Text('Example'),
       ),
-      body: SafeArea(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: LayoutBuilder(builder: (context, constraints) {
-            return CustomPaint(
-              painter: TrianglePainter(snowflakes: _snowflakes),
-              child: SizedBox(
-                height: 620,
-                width: 420,
-                child: ColoredBox(
-                  color: Colors.blue.withOpacity(0.1),
-                  child: RepaintBoundary(
-                    child: CustomPaint(
-                      painter: TrianglePainter(snowflakes: _snowflakes),
-                      willChange: true,
+      body: InfoOverlay(
+        info: 'Painter Triangles $snowflakeTestCount',
+        child: SafeArea(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: LayoutBuilder(builder: (context, constraints) {
+              return CustomPaint(
+                painter: TrianglePainter(snowflakes: _snowflakes),
+                child: SizedBox(
+                  height: 620,
+                  width: 420,
+                  child: ColoredBox(
+                    color: Colors.blue.withOpacity(0.1),
+                    child: RepaintBoundary(
+                      child: CustomPaint(
+                        painter: TrianglePainter(snowflakes: _snowflakes),
+                        willChange: true,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+          ),
         ),
       ),
     );

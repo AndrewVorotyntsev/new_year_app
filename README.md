@@ -46,17 +46,23 @@ https://github.com/user-attachments/assets/e75e816b-ac18-44ea-8b12-08885ea904dd
 
 ### Отрисовка снежинок с помощью Painter.
 
+painter_flakes.dart
+
 https://github.com/user-attachments/assets/4ca6a687-a1db-4020-86dd-984e0301ca3b
 
 Нормальная производительность 100-109 fps
 
 ### Отрисовка снежинок с помощью виджетов.
 
+widget_flakes.dart
+
 https://github.com/user-attachments/assets/b5e1c138-233f-4fef-b7fa-fe97bd1a4b92
 
 Слабая производительность 40-50 fps
 
 ### Отрисовка снежинок с помощью Vertices.
+
+vertices_flakes.dart
 
 https://github.com/user-attachments/assets/a516fb1c-8bea-4a96-bca2-0baf6bca841b
 
@@ -67,17 +73,23 @@ https://github.com/user-attachments/assets/a516fb1c-8bea-4a96-bca2-0baf6bca841b
 
 ### Отрисовка треугольников с помощью Painter.
 
+painter_traingle.dart
+
 https://github.com/user-attachments/assets/79d8574a-8cc2-4e0e-a03f-4e0e3b4a71cd
 
 Плохая производительность 25 fps.
 
 ### Отрисовка треугольников с помощью виджетов.
 
+vertices_triangles.dart
+
 https://github.com/user-attachments/assets/8bef4d20-ac38-49e6-b2cc-b73c413a8b8a
 
 Плохая производительность 20 fps.
 
 ### Отрисовка треугольников с помощью Vertices.
+
+widget_triangles.dart
 
 https://github.com/user-attachments/assets/3369daec-63b6-4629-b66d-186d660b8474
 

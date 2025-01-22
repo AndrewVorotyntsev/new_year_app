@@ -6,9 +6,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 int _snowflakeCount = 100;
-// 7000 снежинок - 60 fps
-
-// ФПС - в режиме разработчика на телефоне
 
 void main() {
   runApp(const MyApp());
@@ -19,13 +16,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      showPerformanceOverlay: true,
-      home: HomeScreen(),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth != 0) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              useMaterial3: true,
+            ),
+            home: const HomeScreen(),
+          );
+        }
+        return Container();
+      },
     );
   }
 }
@@ -85,9 +88,6 @@ class _ScenePageState extends State<ScenePage> with SingleTickerProviderStateMix
 
   void _generateSnowflakes() {
     for (int i = 0; i < _snowflakeCount; i++) {
-      print(widget.constraints.maxWidth);
-      print(widget.constraints.maxHeight);
-
       _snowflakes.add(
         Snowflake(
           position: Offset(
@@ -130,7 +130,6 @@ class _ScenePageState extends State<ScenePage> with SingleTickerProviderStateMix
                 width: 420,
                 child: ColoredBox(
                   color: Colors.red.withOpacity(0.1),
-                  // TODO: Что будет если не обрачивать?
                   child: RepaintBoundary(
                     child: CustomPaint(
                       painter: NewYearTreePainter(snowflakes: _snowflakes),
@@ -164,7 +163,6 @@ class NewYearTreePainter extends CustomPainter {
 
   NewYearTreePainter({required this.snowflakes});
 
-  // TODO: зачем
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 
@@ -183,10 +181,10 @@ class NewYearTreePainter extends CustomPainter {
     _drawGiftBox(canvas, center: Offset(300, size.height - 100), color: Colors.orange, boxSize: Size(100, 80));
     _drawGiftBox(canvas, center: Offset(180, size.height - 100), color: Colors.lightGreen, boxSize: Size(70, 70));
 
-    // canvas.save();
-    // canvas.saveLayer(null, Paint());
+    canvas.save();
+    canvas.saveLayer(null, Paint());
     _drawSnowflakes(canvas);
-    // canvas.restore();
+    canvas.restore();
   }
 
   void _drawSnowflakes(Canvas canvas) {
@@ -197,7 +195,6 @@ class NewYearTreePainter extends CustomPainter {
     }
   }
 
-  // Остальные методы рисования без изменений
   void _drawNightSky(Canvas canvas) {
     canvas.drawPaint(Paint()..color = Colors.indigo);
   }

@@ -1,1 +1,1 @@
-int snowflakeTestCount = 5000;
+int snowflakeTestCount = 100;
